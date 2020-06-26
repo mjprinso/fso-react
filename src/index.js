@@ -1,59 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const Header = (props) => {
+const Header = ({ title }) => {
   return (
-    <h1>{props.course}</h1>
+    <h1>{title}</h1>
   )
 }
 
-const Part = (props) => {
-  return (
-    <p>{props.name} - {props.exercises} exercises</p>
-  )
-}
-
-const Content = (props) => {
-  console.log('props in content', props);
+const Hello = ({ name, age }) => {
+  const bornYear = () => new Date().getFullYear() - age;
   return (
     <div>
-      <Part name={props.parts[0].name} exercises={props.parts[0].exercises} />
-      <Part name={props.parts[1].name} exercises={props.parts[1].exercises} />
-      <Part name={props.parts[2].name} exercises={props.parts[2].exercises} />
+      <p> Hello {name}, you are {age} years old </p>
+      <p>You were born in {bornYear()}</p>
     </div>
   )
 }
 
-const Total = (props) => {
-  return (
-    <p> Total Number of exercises: {props.parts[0].exercises + props.parts[1].exercises + props.parts[2].exercises}</p>
-  )
-}
+
+
+
+
 
 const App = () => {
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
+  const title = 'Component State and event handlers';
 
   return (
     <div>
-      <Header course={course.name} />
-      <Content parts={course.parts} />
-      <Total parts={course.parts} />
+      <Header title={title} />
+      <Hello name='Ossei' age='26' />
     </div >
   );
 }
