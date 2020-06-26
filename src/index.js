@@ -8,19 +8,9 @@ const Header = ({ title }) => {
   )
 }
 
-const Display = (props) => {
-  return (
-    <div><b>Counter is: {props.counter}</b> <br /> </div>
-  )
-}
+const Display = ({ counter }) => <div> <b>Counter is: {counter}</b> </div>
 
-const Button = (props) => {
-  return (
-    <button onClick={props.handleClick}>
-      {props.text}
-    </button>
-  )
-}
+const Button = ({ handleClick, text }) => <button onClick={handleClick}> {text}</button>
 
 const App = () => {
   const title = 'Component State and event handlers';
