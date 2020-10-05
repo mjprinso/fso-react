@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
-// import { useState } from 'react';
 
 const Header = ({ title }) => {
   return (
@@ -8,18 +7,14 @@ const Header = ({ title }) => {
   )
 }
 
-const Display = ({ counter }) => <div> <b>Counter is: {counter}</b> </div>
-
+/* const Display = ({ counter }) => <div> <b>Counter is: {counter}</b> </div>
 const Button = ({ handleClick, text }) => <button onClick={handleClick}> {text}</button>
 
 const App = () => {
-  const title = 'Component State and event handlers';
-  // const { counter } = props;
+  const title = 'A more complex State';
+
   const [counter, setCounter] = useState(0);
 
-  // setTimeout(
-  //   () => setCounter(counter + 1), 1000
-  // )
   const decreaseByOne = () => setCounter(counter - 1)
   const increaseByOne = () => setCounter(counter + 1)
   const setToZero = () => setCounter(0)
@@ -33,45 +28,61 @@ const App = () => {
       <Button handleClick={increaseByOne} text='plus' />
     </div>
   );
+} */
+
+const History = (props) => {
+  if (props.allClicks.length === 0) {
+    return (
+      <div>
+        the app is used by pressing the buttons
+      </div>
+    )
+  }
+
+  return (
+    <div>
+      button press history: {props.allClicks.join(' ')}
+    </div>
+  )
 }
 
-// let counter = 1
+const Button = ({ onClick, text }) => (<button onClick={onClick}>    {text}  </button>)
 
-// const refresh = () => {
-//   ReactDOM.render(<App counter={counter} />,
-//     document.getElementById('root'))
-// }
+const App = (props) => {
+  const title = 'A more complex State';
 
-// refresh();
-// counter += 1
-// refresh()
-// counter += 1
-// refresh()
+  // const [clicks, setClicks] = useState({ left: 0, right: 0 })
 
-// setInterval(() => {
-//   refresh()
-//   counter += 1
-// }, 1000)
+  /* const handleLeftClick = () => { setClicks({ ...clicks, left: clicks.left + 1 }) }
+  const handleRightClick = () => { setClicks({ ...clicks, right: clicks.right + 1 }) } */
 
-ReactDOM.render(<App />, document.getElementById('root'))
+  const [left, setLeft] = useState(0);
+  const [right, setRight] = useState(0);
+  const [allClicks, setAllClicks] = useState([]);
 
-/* const App = () => {
-  const title = 'Component State and event handlers';
+  const handleLeftClick = () => {
+    setAllClicks(allClicks.concat('L'))
+    setLeft(left + 1)
+  }
+
+  const handleRightClick = () => {
+    setAllClicks(allClicks.concat('R'))
+    setRight(right + 1)
+  }
 
   return (
     <div>
       <Header title={title} />
-      <Hello name='Ossei' age='26' />
-    </div >
-  );
-}
 
-const Hello = ({ name, age }) => {
-  const bornYear = () => new Date().getFullYear() - age;
-  return (
-    <div>
-      <p> Hello {name}, you are {age} years old </p>
-      <p>You were born in {bornYear()}</p>
+      <div>
+        {left}
+        <Button onClick={handleLeftClick} text='left' />
+        <Button onClick={handleRightClick} text='right' />
+        {right}
+        <History allClicks={allClicks} />
+      </div>
     </div>
   )
-} */
+}
+
+ReactDOM.render(<App />, document.getElementById('root'))
