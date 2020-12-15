@@ -30,7 +30,7 @@ const App = () => {
   );
 } */
 
-const History = (props) => {
+/* const History = (props) => {
   if (props.allClicks.length === 0) {
     return (
       <div>
@@ -44,7 +44,7 @@ const History = (props) => {
       button press history: {props.allClicks.join(' ')}
     </div>
   )
-}
+} */
 
 const Reviews = (props) => {
   if (props.totalReviews <= 0) {
@@ -97,7 +97,7 @@ const App = (props) => {
   /* const handleLeftClick = () => { setClicks({ ...clicks, left: clicks.left + 1 }) }
   const handleRightClick = () => { setClicks({ ...clicks, right: clicks.right + 1 }) } */
 
-  const [left, setLeft] = useState(0);
+  /* const [left, setLeft] = useState(0);
   const [right, setRight] = useState(0);
   const [allClicks, setAllClicks] = useState([]);
 
@@ -109,7 +109,7 @@ const App = (props) => {
   const handleRightClick = () => {
     setAllClicks(allClicks.concat('R'))
     setRight(right + 1)
-  }
+  } */
 
   /* EX1.6 */
   const [good, setGood] = useState(0);
