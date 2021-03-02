@@ -7,165 +7,85 @@ const Header = ({ title }) => {
   )
 }
 
-/* const Display = ({ counter }) => <div> <b>Counter is: {counter}</b> </div>
-const Button = ({ handleClick, text }) => <button onClick={handleClick}> {text}</button>
+const Button = ({ onClick, text }) => (<button onClick={onClick} style={{ margin: '5px 10px 0px 0px' }} >{text} </button>);
 
-const App = () => {
-  const title = 'A more complex State';
-
-  const [counter, setCounter] = useState(0);
-
-  const decreaseByOne = () => setCounter(counter - 1)
-  const increaseByOne = () => setCounter(counter + 1)
-  const setToZero = () => setCounter(0)
-
-  return (
-    <div>
-      <Header title={title} />
-      <Display counter={counter} />
-      <Button handleClick={decreaseByOne} text='minus' />
-      <Button handleClick={setToZero} text='zero' />
-      <Button handleClick={increaseByOne} text='plus' />
-    </div>
-  );
-} */
-
-/* const History = (props) => {
-  if (props.allClicks.length === 0) {
-    return (
-      <div>
-        the app is used by pressing the buttons
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      button press history: {props.allClicks.join(' ')}
-    </div>
-  )
-} */
-
-const Reviews = (props) => {
-  if (props.totalReviews <= 0) {
-    return (
-      <div>
-        <h4> Be the first to leave a review </h4>
-      </div>
-    )
-  }
-
-  return (
-    <div>
-      <h4>{props.totalReviews} reviews</h4>
-    </div>
-  )
-}
-
-const ReviewStats = ({ props }) => {
-  var title =  'Statistics';
-  if (props.totalReviews > 0) {
-    return (
-      <div style={{ marginTop: '10px' }}>
-        <Header title={title} />
-        <div>
-          <span>Average Rating: {props.totalReviewScore / props.totalReviews}</span>
-        </div>
-        <div>
-          <span>Positive: {(props.good / props.totalReviews) * 100} %</span>
-        </div>
-      </div>
-    );
-  } else {
-    return (
-      <div style={{ marginTop: '10px' }}>
-        <Header title={title} />
-          No reviews yet
-      </div>
-    );
-  }
-}
-
-const Button = ({ onClick, total, text }) => (<button onClick={onClick} style={{ margin: '0px 10px 0px 0px' }} >{text} | {total}</button>);
 
 const App = (props) => {
-  // const title = 'A more complex State';
-  const title = 'A more complex State - Ex 1.6 | Unicafe';
+  const title = 'A more complex State - Ex 1.6 | Anecdotes';
 
-  // const [clicks, setClicks] = useState({ left: 0, right: 0 })
+  const [selected, setSelected] = useState(0);
+  // const [votes, setVotes] = useState(anecdotes.map((an) => { return 0; }));
+  const [votes, setVotes] = useState(anecdotes.map((an, index) => {
+    return {
+      id: index,
+      votes: 0
+    }
+  }));
 
-  /* const handleLeftClick = () => { setClicks({ ...clicks, left: clicks.left + 1 }) }
-  const handleRightClick = () => { setClicks({ ...clicks, right: clicks.right + 1 }) } */
-
-  /* const [left, setLeft] = useState(0);
-  const [right, setRight] = useState(0);
-  const [allClicks, setAllClicks] = useState([]);
-
-  const handleLeftClick = () => {
-    setAllClicks(allClicks.concat('L'))
-    setLeft(left + 1)
+  const nextQuote = () => {
+    const totalQuotes = props.anecdotes.length;
+    const newQuoteIndex = Math.floor(Math.random() * totalQuotes);
+    setSelected(newQuoteIndex);
   }
 
-  const handleRightClick = () => {
-    setAllClicks(allClicks.concat('R'))
-    setRight(right + 1)
-  } */
-
-  /* EX1.6 */
-  const [good, setGood] = useState(0);
-  const [neutral, setNeutral] = useState(0);
-  const [bad, setBad] = useState(0);
-  const [totalReviews, setTotalReviews] = useState(0);
-  const [totalReviewScore, setTotalReviewScore] = useState(0);
-
-  const goodReview = () => {
-    setGood(good + 1);
-    allReview(1);
+  const vote = () => {
+    console.log(`Vote button clicked for index ${selected}`, votes);
+    // setVotes([...votes, selected: selected+=1]);
+    const cv = [...votes];
+    cv[selected].votes += 1;
+    setVotes(cv);
+    console.log(`After Voting for index ${selected}`, votes);
+    /* const copyVotes = [...votes];
+    copyVotes[selected] += 1; */
   }
 
-  const badReview = () => {
-    setBad(bad + 1);
-    allReview(-1);
+  const MostVoted = () => {
+    // var title =  'Statistics';
+    if (votes.length) {
+      const cvs = [...votes];
+      const sortedVotes = cvs.sort((a, b) => Number(b.votes) - Number(a.votes));
+      const mV = sortedVotes[0];
+      console.log(sortedVotes,mV);
+      return (
+        <div style={{ marginTop: '10px' }}>
+          <h3>Anecdote with most vottes</h3>
+          {props.anecdotes[mV.id]}
+          <br />
+          has {mV.votes} votes
+          {/* <div>
+            <span>Average Rating: {props.totalReviewScore / props.totalReviews}</span>
+          </div>
+          <div>
+            <span>Positive: {(props.good / props.totalReviews) * 100} %</span>
+          </div> */}
+        </div>
+      );
+    } else {
+      return (
+        <div style={{ marginTop: '10px' }}>
+          <h3>No votes yet</h3>
+        </div>
+      );
+    }
   }
-
-  const neutralReview = (review) => {
-    setNeutral(neutral + 1);
-    allReview(0);
-  }
-
-  let averageScore = 0;
-  let positivity = 0;
-  const allReview = (reviewScore) => {
-    setTotalReviews(totalReviews + 1);
-    setTotalReviewScore(totalReviewScore + reviewScore);
-    averageScore = totalReviewScore / totalReviews;
-    positivity = (good / totalReviews) * 100;
-  }
-
-  /* return (
-    <div>
-      <Header title={title} />
-
-      <div>
-        {left}
-        <Button onClick={handleLeftClick} text='left' />
-        <Button onClick={handleRightClick} text='right' />
-        {right}
-        <History allClicks={allClicks} />
-      </div>
-    </div>
-  ) */
 
   return (
     <div>
       <Header title={title} />
-      <Reviews totalReviews={totalReviews} />
       <div>
-        <Button onClick={goodReview} total={good} text='Good' />
-        <Button onClick={badReview} total={bad} text='Bad' />
-        <Button onClick={neutralReview} total={neutral} text='Neutral' />
-
-        <ReviewStats props={{ good: good, totalReviews: totalReviews, totalReviewScore: totalReviewScore }} />
+        <h3>Anecdote of the day</h3>
+        {props.anecdotes[selected]}
+        <br/>
+        has {votes[selected].votes} votes
+        {/* has {props.vo} */}
+      </div>
+      <div>
+        <Button onClick={vote} text='Vote' />
+        <Button onClick={nextQuote} text='Next Quote' />
+      </div>
+      <div>
+        <MostVoted />
+      {/* <ReviewStats props={{ good: good, totalReviews: totalReviews, totalReviewScore: totalReviewScore }} /> */}
       </div>
     </div>
   );
@@ -173,4 +93,33 @@ const App = (props) => {
 
 
 
-ReactDOM.render(<App />, document.getElementById('root'))
+
+const anecdotes = [
+  'If it hurts, do it more often',
+  'Adding manpower to a late software project makes it later!',
+  'The first 90 percent of the code accounts for the first 90 percent of the development time...The remaining 10 percent of the code accounts for the other 90 percent of the development time.',
+  'Any fool can write code that a computer can understand. Good programmers write code that humans can understand.',
+  'Premature optimization is the root of all evil.',
+  'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
+];
+
+/* const votes = anecdotes.map((an, index)=> {
+  return 0;
+}); */
+
+/* const votes = anecdotes.map((an, index)=> {
+  return {
+    quoteID: index,
+    votes: 0
+    index: 0
+  };
+}); */
+
+
+
+
+
+ReactDOM.render(
+  <App anecdotes={anecdotes} />,
+  document.getElementById('root')
+)
