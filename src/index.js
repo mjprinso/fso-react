@@ -1,50 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-/* import './index.css';
+// import Note from './components/Note'
 import App from './App';
-import * as serviceWorker from './serviceWorker'; */
 
-/* ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+const notes = [
+  {
+    id: 1,
+    content: 'HTML is easy',
+    date: '2019-05-30T17:30:31.098Z',
+    important: true
+  },
+  {
+    id: 2,
+    content: 'Browser can execute only JavaScript',
+    date: '2019-05-30T18:39:34.091Z',
+    important: false
+  },
+  {
+    id: 3,
+    content: 'GET and POST are the most important methods of HTTP protocol',
+    date: '2019-05-30T19:20:14.298Z',
+    important: true
+  }
+]
+
+
+ReactDOM.render(
+  <App notes={notes} />,
   document.getElementById('root')
-); */
-
-/* const App = () => (
-  <div>
-  <p>Hello world</p>
-  </div>
-) */
-
-const Hello = (props) => {
-  const now = new Date()
-  return (
-    <div>
-      <p>Hello {props.name}, You are {props.age} years old, it is {now.toString()}</p>
-    </div>
-  )
-}
-
-const App = () => {
-  // const now = new Date()
-  const a = 10
-  const b = 20
-  const name = 'Peter'
-  const age = 10
-  return (
-    <div>
-      <h1>Greetings</h1>
-      <Hello  name="Jerome" />
-      <Hello name={name} age={age} />
-      <p>
-        {a} plus {b} is {a + b}
-      </p>
-    </div>
-  )
-}
-
-ReactDOM.render(<App />, document.getElementById('root'))
+)
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
